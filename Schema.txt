@@ -1,0 +1,75 @@
+Program input:
+{
+    "facets": [Facet...],
+    "cards": [Result...]
+}
+
+typedef ImagePath = string
+typedef GrayscaleImagePath = ImagePath
+typedef FacetId = string
+typedef NameFormat = string
+    (Looks like "${inverted}_${color}.png")
+typedef Inclusion = FacetId | (FacetId .. "." .. string)
+
+Result:
+Card & {
+    "hidden": ImagePath
+}
+
+Card:
+{
+    "name": NameFormat,
+    "card": [(FacetId | Blend)...]
+}
+
+Blend:
+{
+    "id": string,
+    "name": NameFormat,
+    "parts": [(Card & {
+        "map": GrayscaleImagePath,
+        "id": string
+    })...],
+    "if": Condition?
+}
+
+Facet:
+{
+    "id": FacetId,
+    "members": [FacetMember...]?,
+    "include": [Inclusion...]?
+}
+
+FacetMember:
+{
+    "name": string,
+    "background": Color?*,
+    "foreground": Color?*,
+    "images": [Image*...]?*,
+    "set": {"$key": value...}?,
+    "if": Condition?
+}
+
+Color: (All are int*, except theta, theta_0, r, and t are float*)
+| [R, G, B]
+| [R, G, B, A]
+| [CX, CY, (r, R, G, B, A)+]
+| [CX, CY, theta_0, (theta, R, G, B, A)+]
+| [X1, Y1, X2, Y2, (t, R, G, B, A)+]
+
+Image:
+{
+    "image": ImagePath*,
+    "cx": int*,
+    "cy": int*,
+    "rotation": float?*,
+    "recolor": bool = true*,
+    "width": int?*,
+    "height": int?*,
+}
+
+Condition:
+| { "mode": "and", "left": Condition, "right": Condition }
+| { "mode": "or", "left": Condition, "right": Condition }
+| { "mode": "in", "left": any*, "right": [any*...]* }
+| { "mode": "not in", "left": any*, "right": [any*...]* }

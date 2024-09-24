@@ -1,0 +1,120 @@
+{
+    "facets": [
+        {
+            "id": "standard_layout",
+            "members": [{ "images": [
+                { "image": "$pip", "cx": 33, "cy": 40, "height": 60 },
+                { "image": "$pip", "cx": 317, "cy": 460, "height": 60, "rotation": 180 },
+                { "image": "$rank", "cx": 33, "cy": 100, "height": 50 },
+                { "image": "$rank", "cx": 317, "cy": 400, "height": 50, "rotation": 180 }
+            ]}]
+        },
+        {
+            "id": "no_inversion",
+            "members": [{ "name": "regular", "foreground": "$color", "background": [255, 255, 255] }]
+        },
+        {
+            "id": "inversion",
+            "members": [
+                { "name": "regular", "foreground": "$color", "background": [255, 255, 255] },
+                { "name": "inverted", "foreground": [255, 255, 255], "background": "$color" }
+            ]
+        },
+        {
+            "id": "color",
+            "members": [
+                { "name": "cyan", "set": { "$color": [0, 127, 255] } },
+                { "name": "green", "set": { "$color": [50, 150, 50] } },
+                { "name": "red", "set": { "$color": [255, 0, 0] } },
+                { "name": "black", "set": { "$color": [25, 25, 25] } },
+                { "name": "purple", "set": { "$color": [150, 50, 150] } },
+                { "name": "orange", "set": { "$color": [255, 127, 0] } },
+                { "name": "brown", "set": { "$color": [140, 80, 50] } },
+                { "name": "grey", "set": { "$color": [150, 150, 150] } }
+            ]
+        },
+        {
+            "id": "suit_color",
+            "members": [
+                { "name": "cyan", "set": { "$color": [0, 127, 255] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "green", "set": { "$color": [50, 150, 50] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "red", "set": { "$color": [255, 0, 0] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "black", "set": { "$color": [25, 25, 25] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "purple", "set": { "$color": [150, 50, 150] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "orange", "set": { "$color": [255, 127, 0] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "brown", "set": { "$color": [140, 80, 50] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } },
+                { "name": "grey", "set": { "$color": [150, 150, 150] }, "if": { "mode": "in", "left": "$suit_color", "right": ["$color"] } }
+            ]
+        },
+        {
+            "id": "suit",
+            "members": [
+                { "name": "spades", "set": { "$pip": "./img/suit/spades.png", "$fancy_pip": "./img/fancy/spades.png", "$suit_color": [25, 25, 25] } },
+                { "name": "hearts", "set": { "$pip": "./img/suit/hearts.png", "$fancy_pip": "./img/fancy/hearts.png", "$suit_color": [255, 0, 0] } },
+                { "name": "clubs", "set": { "$pip": "./img/suit/clubs.png", "$fancy_pip": "./img/fancy/clubs.png", "$suit_color": [50, 150, 50] } },
+                { "name": "diamonds", "set": { "$pip": "./img/suit/diamonds.png", "$fancy_pip": "./img/fancy/diamonds.png", "$suit_color": [0, 127, 255] } }
+            ]
+        },
+        {
+            "id": "8suit",
+            "members": [
+                { "name": "bullets", "set": { "$pip": "./img/suit/bullets.png", "$fancy_pip": "./img/fancy/bullets.png", "$suit_color": [150, 150, 150] } },
+                { "name": "orbs", "set": { "$pip": "./img/suit/orbs.png", "$fancy_pip": "./img/fancy/orbs.png", "$suit_color": [255, 127, 0] } },
+                { "name": "stars", "set": { "$pip": "./img/suit/stars.png", "$fancy_pip": "./img/fancy/stars.png", "$suit_color": [150, 50, 150] } },
+                { "name": "nuts", "set": { "$pip": "./img/suit/nuts.png", "$fancy_pip": "./img/fancy/nuts.png", "$suit_color": [140, 80, 50] } }
+            ],
+            "include": ["suit"]
+        },
+        {
+            "id": "rank",
+            "members": [
+                { "name": "2", "set": { "$rank": "./img/rank/2.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 375, "height": 85 }] },
+                { "name": "3", "set": { "$rank": "./img/rank/3.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 375, "height": 85 }] },
+                { "name": "4", "set": { "$rank": "./img/rank/4.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 250, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 375, "height": 85 }] },
+                { "name": "5", "set": { "$rank": "./img/rank/5.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 150, "height": 85 }, { "image": "$pip", "cx": 100, "cy": 350, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 250, "cy": 150, "height": 85 }, { "image": "$pip", "cx": 250, "cy": 350, "height": 85 }] },
+                { "name": "6", "set": { "$rank": "./img/rank/6.png" }, "images": [{ "image": "$pip", "cx": 125, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 375, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 375, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 250, "height": 85 }] },
+                { "name": "7", "set": { "$rank": "./img/rank/7.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 375, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 125, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 375, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 250, "height": 85 }] },
+                { "name": "8", "set": { "$rank": "./img/rank/8.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 100, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 85 }] },
+                { "name": "9", "set": { "$rank": "./img/rank/9.png" }, "images": [{ "image": "$pip", "cx": 75, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 100, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 400, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 100, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 400, "height": 85 }] },
+                { "name": "10", "set": { "$rank": "./img/rank/10.png" }, "images": [{ "image": "$pip", "cx": 125, "cy": 100, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 100, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 200, "height": 85 }, { "image": "$pip", "cx": 75, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 175, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 275, "cy": 300, "height": 85 }, { "image": "$pip", "cx": 125, "cy": 400, "height": 85 }, { "image": "$pip", "cx": 225, "cy": 400, "height": 85 }] },
+                { "name": "J", "set": { "$rank": "./img/rank/J.png" }, "images": [{ "image": "./img/misc/jack.png", "cx": 175, "cy": 250, "width": 350, "height": 500 }] },
+                { "name": "Q", "set": { "$rank": "./img/rank/Q.png" }, "images": [{ "image": "./img/misc/queen.png", "cx": 175, "cy": 250, "width": 350, "height": 500 }] },
+                { "name": "K", "set": { "$rank": "./img/rank/K.png" }, "images": [{ "image": "./img/misc/king.png", "cx": 175, "cy": 250, "width": 350, "height": 500 }] },
+                { "name": "A", "set": { "$rank": "./img/rank/A.png" }, "images": [{ "image": "$fancy_pip", "cx": 175, "cy": 250, "height": 250 }] }
+            ]
+        },
+        {
+            "id": "chaos_rank",
+            "members": [
+                { "name": "0", "set": { "$rank": "./img/rank/0.png" } },
+                { "name": "1", "set": { "$rank": "./img/rank/1.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 250, "height": 85 }] },
+                { "name": "11", "set": { "$rank": "./img/rank/11.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 400, "height": 65 }] },
+                { "name": "12", "set": { "$rank": "./img/rank/12.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 400, "height": 65 }] },
+                { "name": "13", "set": { "$rank": "./img/rank/13.png" }, "images": [{ "image": "$pip", "cx": 175, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 65 }] },
+                { "name": "14", "set": { "$rank": "./img/rank/14.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 400, "height": 65 }] },
+                { "name": "15", "set": { "$rank": "./img/rank/15.png" }, "images": [{ "image": "$pip", "cx": 100, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 100, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 175, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 250, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 325, "height": 65 }, { "image": "$pip", "cx": 100, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 175, "cy": 400, "height": 65 }, { "image": "$pip", "cx": 250, "cy": 400, "height": 65 }] }
+            ],
+            "include": ["rank"]
+        },
+        {
+            "id": "berlin_joker",
+            "members": [
+                { "name": "joker", "images": [{ "image": "./img/misc/joker.png", "cx": 175, "cy": 250, "width": 350, "height": 500, "recolor": false }] }
+            ]
+        },
+        {
+            "id": "alt_jokers",
+            "members": [
+                { "name": "color", "images": [{ "image": "./img/misc/joker.png", "cx": 175, "cy": 250, "width": 350, "height": 500 }] },
+                { "name": "magna", "images": [{ "image": "./img/misc/suit_joker.png", "cx": 175, "cy": 250, "width": 350, "height": 500 }] }
+            ]
+        }
+    ],
+    "cards": [
+        { "name": "./decks/berlin/${berlin_suit}.png", "card": ["standard_layout", "no_inversion", "suit", "suit_color", "rank"], "hidden": "./img/secret.png" },
+        { "name": "./decks/berlin/joker.png", "card": ["berlin_joker"], "hidden": "./img/secret.png" },
+        { "name": "./decks/jokers/${inversion}/${alt_jokers}_jokers.png", "card": ["inversion", "alt_jokers", "color"], "hidden": "./img/secret.png" },
+        { "name": "./decks/chaos/${inversion}/${color}/${suit}.png", "card": ["standard_layout", "inversion", "color", "8suit", "chaos_rank"], "hidden": "./img/secret.png" },
+        { "name": "./decks/blended/${inversion}/${blend}.png", "card": ["standard_layout", "inversion", { "id": "blend", "name": "${bl}-${tr}", "parts": [{ "id": "bl", "name": "${suit}", "map": "./img/misc/bl.png", "card": ["suit"] }, { "id": "tr", "name": "${suit}", "map": "./img/misc/tr.png", "card": ["suit"] }] }, "suit_color", "chaos_rank"], "hidden": "./img/secret.png" }
+    ]
+}
