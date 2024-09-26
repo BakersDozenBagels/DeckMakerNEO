@@ -1,11 +1,37 @@
-﻿using DeckMakerNeo.JSON;
+﻿using DeckMakerNeo;
+using DeckMakerNeo.Crossing;
+using DeckMakerNeo.Drawing;
+using DeckMakerNeo.JSON;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 internal class Program
 {
+    private static JsonSerializerOptions _options = new JsonSerializerOptions()
+    {
+        PropertyNameCaseInsensitive = true,
+        AllowTrailingCommas = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+        NumberHandling = JsonNumberHandling.Strict,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement,
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
+        WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+    };
+
     private static void Main(string[] args)
     {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Console.WriteLine("Only windows is supported.");
+            return;
+        }
+
         if (args.Length != 1)
         {
             DisplayHelp();
@@ -19,23 +45,78 @@ internal class Program
             return;
         }
 
-        var options = new JsonSerializerOptions()
+        var data = JsonSerializer.Deserialize<Config>(File.ReadAllText(args[0]), _options);
+
+        HashSet<string> files = [];
+        HashSet<string> missing = [];
+        bool cachedExists(string file)
         {
-            PropertyNameCaseInsensitive = true,
-            AllowTrailingCommas = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
-            NumberHandling = JsonNumberHandling.Strict,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement,
-            UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
+            if (files.Contains(file))
+                return true;
+            if (missing.Contains(file))
+                return false;
+            if (File.Exists(file))
+            {
+                files.Add(file);
+                return true;
+            }
+            missing.Add(file);
+            return false;
+        }
 
-        var data = JsonSerializer.Deserialize<Config>(File.ReadAllText(args[0]), options);
+        foreach (var item in data!.Cards)
+            if (!cachedExists(item.Hidden))
+                throw new ArgumentException($"File '{item.Hidden}' not found");
 
-        Console.WriteLine(JsonSerializer.Serialize(data, options));
+        Console.WriteLine("Determining cards to generate...");
 
+        var decks = Crosser.Cross(data!);
+
+        Console.WriteLine($"Generating {decks.Sum(d => d.Sheets.Count)} sheets and {decks.Sum(d => d.Sheets.Sum(s => s.Cards.Count))} total cards.");
+        Console.WriteLine("Validating cards...");
+
+        HashSet<string> overwrite = [];
+
+        foreach (var deck in decks)
+        {
+            foreach (var sheet in deck.Sheets)
+            {
+                foreach (var card in sheet.Cards)
+                    card.Fill(cachedExists);
+                foreach (var ss in sheet.Split())
+                    if (cachedExists(ss.Name))
+                        overwrite.Add(ss.Name);
+            }
+        }
+
+        Console.WriteLine("All cards are valid.");
+
+        if (overwrite.Count > 0)
+            Console.WriteLine($"{overwrite.Count} files will be overwritten.");
+
+        Console.WriteLine("Press any button to begin generation.");
+        Console.ReadKey();
+        Console.WriteLine();
+
+        Dictionary<string, Bitmap> imageCache = [];
+        Bitmap getImage(string path)
+        {
+            if (imageCache.TryGetValue(path, out var bitmap))
+                return bitmap;
+            return imageCache[path] = new(Image.FromFile(path));
+        }
+
+        foreach (var deck in decks)
+        {
+            Console.WriteLine($"Deck \"{deck.Name}\" has {deck.Sheets.Count} sheets ({deck.Sheets.Sum(s => s.Cards.Count)} total cards)");
+            foreach (var sheet in deck.Sheets)
+            {
+                Console.WriteLine($"- Sheet \"{sheet.Name}\" has {sheet.Cards.Count} cards.");
+                DrawingUtil.DoSheet(sheet, deck.Hidden, getImage);
+            }
+        }
+
+        Console.WriteLine("Generation complete.");
         Console.ReadKey();
     }
 

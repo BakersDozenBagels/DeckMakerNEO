@@ -1,3 +1,5 @@
+NOTE: type* = type | ("$" .. string)
+
 Program input:
 {
     "facets": [Facet...],

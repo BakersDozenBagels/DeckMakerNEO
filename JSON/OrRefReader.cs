@@ -38,8 +38,8 @@ public class OrRefReader : JsonConverterFactory
             if (reader.TokenType == JsonTokenType.String)
             {
                 var str = reader.GetString();
-                if (str is { } && str[0] == '$')
-                    return OrRef<T>.OfReference(str[1..]);
+                if (str is { } && str is ['$', ..var rest])
+                    return OrRef<T>.OfReference(rest);
             }
             return OrRef<T>.OfConcrete(_valueConverter.Read(ref reader, _type, options));
         }
