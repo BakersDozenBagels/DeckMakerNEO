@@ -4,14 +4,16 @@ using DeckMakerNeo.Drawing;
 using DeckMakerNeo.JSON;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 internal class Program
 {
-    private static JsonSerializerOptions _options = new JsonSerializerOptions()
+    [ThreadStatic]
+    private static Dictionary<string, Bitmap>? _imageCache;
+
+    private static readonly JsonSerializerOptions _options = new()
     {
         PropertyNameCaseInsensitive = true,
         AllowTrailingCommas = true,
@@ -72,7 +74,7 @@ internal class Program
 
         var decks = Crosser.Cross(data!);
 
-        Console.WriteLine($"Generating {decks.Sum(d => d.Sheets.Count)} sheets and {decks.Sum(d => d.Sheets.Sum(s => s.Cards.Count))} total cards.");
+        Console.WriteLine($"Generating {decks.Sum(d => d.Sheets.Count)} sheets and {decks.Sum(d => d.Sheets.Sum((Sheet s) => s.Cards.Count))} total cards.");
         Console.WriteLine("Validating cards...");
 
         HashSet<string> overwrite = [];
@@ -94,16 +96,11 @@ internal class Program
         if (overwrite.Count > 0)
             Console.WriteLine($"{overwrite.Count} files will be overwritten.");
 
-        Console.WriteLine("Press any button to begin generation.");
-        Console.ReadKey();
-        Console.WriteLine();
-
-        Dictionary<string, Bitmap> imageCache = [];
         Bitmap getImage(string path)
         {
-            if (imageCache.TryGetValue(path, out var bitmap))
+            if (_imageCache.TryGetValue(path, out var bitmap))
                 return bitmap;
-            return imageCache[path] = new(Image.FromFile(path));
+            return _imageCache[path] = new(Image.FromFile(path));
         }
 
         foreach (var deck in decks)
@@ -111,13 +108,39 @@ internal class Program
             Console.WriteLine($"Deck \"{deck.Name}\" has {deck.Sheets.Count} sheets ({deck.Sheets.Sum(s => s.Cards.Count)} total cards)");
             foreach (var sheet in deck.Sheets)
             {
-                Console.WriteLine($"- Sheet \"{sheet.Name}\" has {sheet.Cards.Count} cards.");
-                DrawingUtil.DoSheet(sheet, deck.Hidden, getImage);
+                ThreadPool.QueueUserWorkItem(_ => {
+                    _imageCache ??= [];
+                    Console.WriteLine($"Sheet \"{sheet.Name}\" has {sheet.Cards.Count} cards.");
+                    DrawingUtil.DoSheet(sheet, deck.Hidden, getImage);
+                });
             }
         }
 
+        decks = null; // Allow GC to release card descriptions
+
+        int ix = 14;
+        while (ThreadPool.PendingWorkItemCount > 0)
+        {
+            ix++;
+            if (ix >= 15)
+            {
+                ix = 0;
+                Console.WriteLine($"{ThreadPool.ThreadCount} sheets generating, {ThreadPool.PendingWorkItemCount} queued");
+            }
+            Thread.Sleep(1000);
+        }
+        while (ThreadPool.ThreadCount > 0)
+        {
+            ix++;
+            if (ix >= 50)
+            {
+                ix = 0;
+                Console.WriteLine($"{ThreadPool.ThreadCount} sheets generating, {ThreadPool.PendingWorkItemCount} queued");
+            }
+            Thread.Sleep(100);
+        }
+
         Console.WriteLine("Generation complete.");
-        Console.ReadKey();
     }
 
     private static void DisplayHelp()

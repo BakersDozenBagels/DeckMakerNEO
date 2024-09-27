@@ -3,7 +3,6 @@ using DeckMakerNeo.JSON;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.CompilerServices;
 
 namespace DeckMakerNeo.Drawing;
 
@@ -181,7 +180,8 @@ public static class DrawingUtil
             9 or 10 or 11 => (4, 3),
             >= 12 and <= 15 => (4, 4),
             >= 16 and <= 19 => (5, 4),
-            >= 20 and <= 24 => (5, 5),
+            20 => (7, 3), // For compatibility
+            >= 21 and <= 24 => (5, 5),
             >= 25 and <= 29 => (6, 5),
             >= 30 and <= 35 => (6, 6),
             >= 36 and <= 41 => (7, 6),
