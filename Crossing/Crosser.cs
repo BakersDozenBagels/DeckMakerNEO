@@ -55,22 +55,19 @@ internal static class Crosser
         if (!ValidateCardName(card.Name, out var deps, out var fill))
             throw new ArgumentException($"Invalid card name string \"{card.Name}\"");
 
-        var info = card.Card.Select(c => (c, c.IsFacet ? c.Facet : c.Blend.Id)).ToArray();
-        if (info.DistinctBy(i => i.Item2).Count() != info.Length)
+        var info = card.Card.Select(c => c.IsFacet ? c.Facet : c.Blend.Id).ToArray();
+        if (info.DistinctBy(i => i).Count() != info.Length)
             throw new ArgumentException($"Non-unique facets specified for card name string \"{card.Name}\"");
 
-        if (!deps.All(d => info.Any(i => i.Item2 == d)))
+        if (!deps.All(d => info.Any(i => i == d)))
             throw new ArgumentException($"Not all variables filled for card name string \"{card.Name}\"");
 
-        CardDescription.SubCardDescription[] stages =
-            info.Select(i => i.c).ToArray();
 
-        Axis[] stageLookup = stages
+        Axis[] stageLookup = card.Card
             .Select(s => s.IsFacet ?
                 Axis.OfFacet(new(facetLookup(s.Facet))) :
                 Axis.OfBlend(new(Blend(s.Blend, facetLookup))))
             .ToArray();
-        string[] stageNames = stages.Select(s => s.IsFacet ? s.Facet : s.Blend.Id).ToArray();
 
         int[] mod = stageLookup.Select(st => st.Length).ToArray();
         int[] div = new int[mod.Length];
@@ -99,7 +96,7 @@ internal static class Crosser
                         BlendItem toMerge = stageLookup[j].IsFacet ?
                             stageLookup[j].Facet!.Array[chosen[j]] :
                             stageLookup[j].Blend!.Array[chosen[j]];
-                        working[j + 1] = working[j].Merge(stageNames[j], toMerge);
+                        working[j + 1] = working[j].Merge(info[j], toMerge);
                     }
                     break;
                 }

@@ -74,7 +74,7 @@ internal class Program
 
         var decks = Crosser.Cross(data!);
 
-        Console.WriteLine($"Generating {decks.Sum(d => d.Sheets.Count)} sheets and {decks.Sum(d => d.Sheets.Sum((Sheet s) => s.Cards.Count))} total cards.");
+        Console.WriteLine($"Generating {decks.Sum(static (Deck d) => d.Sheets.Count)} sheets and {decks.Sum(static (Deck d) => d.Sheets.Sum(static (Sheet s) => s.Cards.Count))} total cards.");
         Console.WriteLine("Validating cards...");
 
         HashSet<string> overwrite = [];
@@ -108,11 +108,11 @@ internal class Program
             Console.WriteLine($"Deck \"{deck.Name}\" has {deck.Sheets.Count} sheets ({deck.Sheets.Sum(s => s.Cards.Count)} total cards)");
             foreach (var sheet in deck.Sheets)
             {
-                ThreadPool.QueueUserWorkItem(_ => {
+                ThreadPool.QueueUserWorkItem(t => {
                     _imageCache ??= [];
                     Console.WriteLine($"Sheet \"{sheet.Name}\" has {sheet.Cards.Count} cards.");
                     DrawingUtil.DoSheet(sheet, deck.Hidden, getImage);
-                });
+                }, (sheet, deck));
             }
         }
 
