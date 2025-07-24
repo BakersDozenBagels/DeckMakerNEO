@@ -48,7 +48,7 @@ public class Card
             if (desc.Foreground is not null)
                 c.Foreground = desc.Foreground;
             desc.Images?.Map(
-                    concrete => c.Images.AddRange(concrete.Select(i => i.IsReference ? i : i.Concrete.Clone())!),
+                    concrete => c.Images.AddRange(concrete.Select(i => i.IsReference ? i! : i.Concrete!.Clone())!),
                     reference => c.ImageLists.Add(reference!));
             if (desc.Set is not null)
                 foreach (var v in desc.Set)

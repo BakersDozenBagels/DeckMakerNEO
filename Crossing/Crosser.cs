@@ -94,8 +94,8 @@ internal static class Crosser
                     for (int j = i; j < chosen.Length; j++)
                     {
                         BlendItem toMerge = stageLookup[j].IsFacet ?
-                            stageLookup[j].Facet!.Array[chosen[j]] :
-                            stageLookup[j].Blend!.Array[chosen[j]];
+                            stageLookup[j].Facet.Array[chosen[j]] :
+                            stageLookup[j].Blend.Array[chosen[j]];
                         working[j + 1] = working[j].Merge(info[j], toMerge);
                     }
                     break;

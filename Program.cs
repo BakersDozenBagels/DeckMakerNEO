@@ -98,9 +98,9 @@ internal class Program
 
         Bitmap getImage(string path)
         {
-            if (_imageCache.TryGetValue(path, out var bitmap))
+            if (_imageCache!.TryGetValue(path, out var bitmap))
                 return bitmap;
-            return _imageCache[path] = new(Image.FromFile(path));
+            return _imageCache![path] = new(Image.FromFile(path));
         }
 
         foreach (var deck in decks)
