@@ -94,7 +94,7 @@ public partial class ColorDescription
 
     public record struct GradientStop(OrRef<float> T, OrRef<int> R, OrRef<int> G, OrRef<int> B, OrRef<int> A)
     {
-        public GradientStop Fill(Dictionary<string, JsonElement> variables) => new(
+        public readonly GradientStop Fill(Dictionary<string, JsonElement> variables) => new(
                     T.Deref(variables),
                     R.Deref(variables),
                     G.Deref(variables),

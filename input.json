@@ -116,6 +116,12 @@
             ]
         },
         {
+            "id": "sneven",
+            "members": [
+                { "name": "7n", "set": { "$rank": "./img/rank/7n.png" }, "images": [{ "image": "$pip", "cx": 300, "cy": 50, "height": 85, "rotation": 80 }, { "image": "$pip", "cx": 40, "cy": 155, "height": 85, "rotation": 180 }, { "image": "$pip", "cx": 290, "cy": 185, "height": 85, "rotation": 180 }, { "image": "$pip", "cx": 175, "cy": 205, "height": 85, "rotation": 180 }, { "image": "$pip", "cx": 90, "cy": 245, "height": 85, "rotation": 235 }, { "image": "$pip", "cx": 215, "cy": 340, "height": 85, "rotation": 0 }, { "image": "$pip", "cx": 120, "cy": 450, "height": 85, "rotation": 180 }] }
+            ]
+        },
+        {
             "id": "berlin_joker",
             "members": [
                 { "name": "joker", "foreground": [0, 0, 0], "background": [255, 255, 255], "images": [{ "image": "./img/misc/joker.png", "cx": 175, "cy": 250, "width": 350, "height": 500, "recolor": false }] }
@@ -134,8 +140,9 @@
         { "name": "./decks/berlin/joker.png", "card": ["berlin_joker"], "hidden": "./img/misc/secret.png" },
         { "name": "./decks/jokers/${inversion}/${alt_jokers}_jokers.png", "card": ["inversion", "alt_jokers", "color"], "hidden": "./img/misc/secret.png" },
         { "name": "./decks/chaos/${inversion}/${color}/${8suit}.png", "card": ["standard_layout", "inversion", "color", "8suit", "chaos_rank"], "hidden": "./img/misc/secret.png" },
-        { "name": "./decks/color-shock/${8suit}/${blend}.png", "card": ["standard_layout", "only_inversion", "8suit", { "id": "blend", "name": "${bl}-${tr}", "if": { "mode": "not in", "left": "$bl", "right": ["$tr"] }, "parts": [{ "id": "bl", "name": "${color}", "map": "./img/misc/bl.png", "card": ["color"] }, { "id": "tr", "name": "${color}", "map": "./img/misc/tr.png", "card": ["color"] }] }, "chaos_rank"], "hidden": "./img/misc/secret.png" },
-        { "name": "./decks/blended/${inversion}/${blend}.png", "card": ["standard_layout", "inversion", { "id": "blend", "name": "${bl}-${tr}", "if": { "mode": "not in", "left": "$bl", "right": ["$tr"] }, "parts": [{ "id": "bl", "name": "${suit}", "map": "./img/misc/bl.png", "card": ["suit", "suit_color"] }, { "id": "tr", "name": "${suit}", "map": "./img/misc/tr.png", "card": ["suit", "suit_color"] }] }, "chaos_rank"], "hidden": "./img/misc/secret.png" },
-        //{ "name": "./decks/mega-blended/${blend}.png", "card": ["standard_layout", { "id": "blend", "name": "${bl}/${tr}", "parts": [{ "id": "bl", "name": "${inversion}/${color}/${8suit}/${chaos_rank}", "map": "./img/misc/bl.png", "card": ["inversion", "8suit", "color", "chaos_rank"] }, { "id": "tr", "name": "${inversion}/${color}/${8suit}", "map": "./img/misc/tr.png", "card": ["inversion", "8suit", "color", "chaos_rank"] }] }], "hidden": "./img/misc/secret.png" },
+        { "name": "./decks/color-shock/${inversion}/${8suit}/${blend}.png", "card": ["standard_layout", "inversion", "8suit", { "id": "blend", "name": "${bl}-${tr}", "if": { "mode": "not in", "left": "$bl", "right": ["$tr"] }, "parts": [{ "id": "bl", "name": "${color}", "map": "./img/misc/bl.png", "card": ["color"] }, { "id": "tr", "name": "${color}", "map": "./img/misc/tr.png", "card": ["color"] }] }, "chaos_rank"], "hidden": "./img/misc/secret.png" },
+        { "name": "./decks/blended/${inversion}/${blend}.png", "card": ["standard_layout", "inversion", { "id": "blend", "name": "${bl}-${tr}", "if": { "mode": "not in", "left": "$bl", "right": ["$tr"] }, "parts": [{ "id": "bl", "name": "${8suit}", "map": "./img/misc/bl.png", "card": ["8suit", "suit_color"] }, { "id": "tr", "name": "${8suit}", "map": "./img/misc/tr.png", "card": ["8suit", "suit_color"] }] }, "chaos_rank"], "hidden": "./img/misc/secret.png" },
+        { "name": "./decks/mega-blended/${blend}.png", "card": ["standard_layout", { "id": "blend", "name": "${bl}/${tr}", "parts": [{ "id": "bl", "name": "${inversion}/${color}/${8suit}/${chaos_rank}", "map": "./img/misc/bl.png", "card": ["inversion", "8suit", "color", "chaos_rank"] }, { "id": "tr", "name": "${inversion}/${color}/${8suit}", "map": "./img/misc/tr.png", "card": ["inversion", "8suit", "color", "chaos_rank"] }] }], "hidden": "./img/misc/secret.png" },
+        { "name": "./decks/snevens.png", "card": ["standard_layout", "no_inversion", "8suit", "suit_color", "sneven"], "hidden": "./img/misc/secret.png" }
     ]
 }

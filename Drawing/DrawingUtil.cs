@@ -70,17 +70,22 @@ public static class DrawingUtil
             hh = h / 2,
             cx = (desc.Recolor!.Concrete! ? 0 : x * 350) + desc.Cx.Concrete!,
             cy = (desc.Recolor.Concrete! ? 0 : y * 500) + desc.Cy.Concrete!;
-        double c = Math.Cos(Math.PI / 180 * desc.Rotation!.Concrete!),
-            s = Math.Sin(Math.PI / 180 * desc.Rotation.Concrete!),
+        double t = Math.PI / 180 * desc.Rotation!.Concrete!,
+            c = Math.Cos(t),
+            s = Math.Sin(t),
+            cn = c,
+            sn = Math.Sin(-t),
             chw = c * hw,
             chh = c * hh,
             shw = s * hw,
-            shh = s * hh;
+            shh = s * hh,
+            cnhw = cn * hw,
+            snhh = sn * hh;
 
         Point[] dest = [
             new((int)(cx - chw + shh), (int)(cy - chh - shw)),
-            new((int)(cx + chw - shh), (int)(cy - chh + shw)),
-            new((int)(cx - chw + shh), (int)(cy + chh - shw))
+            new((int)(cx + cnhw - snhh), (int)(cy - chh + shw)),
+            new((int)(cx - cnhw + snhh), (int)(cy + chh - shw))
         ];
 
         (desc.Recolor.Concrete! ? rgfx : gfx).DrawImage(getImage(desc.Image.Concrete!), dest);
